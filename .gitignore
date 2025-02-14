@@ -1,2 +1,8 @@
 # Virtual enviroment
 venv/
+
+# Cryptographic keys certificate
+*.pem
+
+# Enviroment variables
+*.env
