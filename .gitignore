@@ -6,3 +6,6 @@ venv/
 
 # Enviroment variables
 *.env
+
+# Python cache data
+*__pycache__*
