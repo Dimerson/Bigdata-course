@@ -1,0 +1,14 @@
+# testar criacao de pasta
+mkdir teste
+
+# testar criacao de files
+echo "apenas um teste" > teste/borave.txt
+
+# mudar para usuario postres
+sudo su - postgres
+
+# logar no postgres
+psql
+
+# criar banco de dados
+create database bdteste;
