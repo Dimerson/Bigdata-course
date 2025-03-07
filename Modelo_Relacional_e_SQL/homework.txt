@@ -1,0 +1,22 @@
+-------- Criar as seguintes consultas:
+
+1) Compras de um cliente específico
+    - Campos: Nome do cliente, produto, quantidade, valor total, data de venda
+    - Filtros: Código do cliente
+
+
+2) Lista dos 5 melhores/piores vendedores (2 consultas)
+    - Campos: Nome do vendedor, total de vendas
+    - Agrupado por vendedor
+    - Ordenado pelo total de vendas
+
+
+3) Total de vendas em um período
+    - Campos: Produto, Total de Vendas
+    - Agrupado por produto
+    - Filtro de mês e ano
+
+
+4) Produtos com maiores descontos
+    - Campos: Produto, vendedor, total de descontos
+    - Agrupado por produto
