@@ -18,5 +18,91 @@
 
 
 4) Produtos com maiores descontos
-    - Campos: Produto, vendedor, total de descontos
+    - Campos: Produto, total de descontos
     - Agrupado por produto
+
+
+
+
+
+--------- Respostas
+
+1) select cliente, produto, quantidade, valortotal, data from relacional.itensvenda as itensvenda inner join relacional.produtos as produtos on (itensvenda.idproduto = produtos.idproduto) inner join relacional.vendas as vendas on (vendas.idvenda = itensvenda.idvenda) inner join relacional.clientes as clientes on (vendas.idcliente = clientes.idcliente) where vendas.idcliente = [Inserir aqui o id desejado];
+
+Resultado (para id = 1):
+
+       cliente        |                                 produto                                 | quantidade | valortotal |    data
+----------------------+-------------------------------------------------------------------------+------------+------------+------------
+ Adelina Buenaventura | Bicicleta Altools Stroll Aro 26 Freio À Disco 21 Marchas                |          1 |    7820.85 | 2016-01-01
+ Adelina Buenaventura | Bermuda Predactor 3Xu Pro                                               |          1 |      97.75 | 2016-01-01
+ Adelina Buenaventura | Camiseta Predactor 3Xu Multiplied                                       |          1 |     135.00 | 2016-01-01
+ Adelina Buenaventura | Bicicleta Altools Stroll Aro 26 Freio À Disco 21 Marchas                |          1 |    7820.85 | 2016-01-02
+ Adelina Buenaventura | Bicicleta Gometws Endorphine 6.1 Shimano Alumínio- Aro 26 - 21 Marchas  |          2 |    5910.00 | 2016-01-02
+ Adelina Buenaventura | Bermuda Predactor 3Xu Pro                                               |          1 |      97.75 | 2016-01-02
+ Adelina Buenaventura | Bicicleta Trinc Câmbios Shimano Aro 29 Freio A Disco 24v                |          1 |    6892.20 | 2016-12-13
+ Adelina Buenaventura | Bicicleta Gometws Endorphine 7.3 - Shimano Alumínio Aro 29 - 24 Marchas |          1 |    2268.99 | 2016-12-13
+ Adelina Buenaventura | Bermuda Predactor 3Xu Pro                                               |          1 |     103.50 | 2016-12-13
+ Adelina Buenaventura | Camiseta Predactor 3Xu Multiplied                                       |          1 |     114.75 | 2016-12-13
+
+2)
+
+Melhores vendedores: select nome as "Vendedor", sum(total) as "Total de Vendas" from relacional.vendas as vendas inner join relacional.vendedores as vendedores on (vendas.idvendedor = vendedores.idvendedor) group by nome order by "Total de Vendas" DESC limit 5;
+
+Resultado:
+     Vendedor     | Total de Vendas
+------------------+-----------------
+ Capitolino Bahía |       425929.36
+ Hélio Liberato   |       355440.67
+ Simão Rivero     |       347815.24
+ Godo Capiperibe  |       327094.38
+ Daniel Pirajá    |       318260.78
+
+
+Piores vendedores: select nome as "Vendedor", sum(total) as "Total de Vendas" from relacional.vendas as vendas inner join relacional.vendedores as vendedores on (vendas.idvendedor = vendedores.idvendedor) group by nome order by "Total de Vendas" ASC limit 5;
+
+Resultado:
+     Vendedor     | Total de Vendas
+------------------+-----------------
+ Capitolino Bahía |       425929.36
+ Hélio Liberato   |       355440.67
+ Simão Rivero     |       347815.24
+ Godo Capiperibe  |       327094.38
+ Daniel Pirajá    |       318260.78
+
+
+
+3) select produto, sum(total) from relacional.itensvenda as itensvenda inner join relacional.produtos as produtos on (itensvenda.idproduto = produtos.idproduto) inner join relacional.vendas as vendas on (itensvenda.idvenda = vendas.idvenda) where DATE_TRUNC('month', data) = DATE_TRUNC('month',[mes-ano-01]::DATE) group by produto;
+
+Resultado (utilizando para janeiro de 2016 [substituindo chaves na função para '2016-01-01']):
+
+                                     produto                                      |    sum
+----------------------------------------------------------------------------------+-----------
+ Bermuda Predactor 3Xu Pro                                                        | 106662.91
+ Bicicleta Altools Stroll Aro 26 Freio À Disco 21 Marchas                         | 112019.55
+ Bicicleta Aro 29 Mountain Bike Endorphine 6.3 - 24 Marchas - Shimano - Alumínio  | 156634.53
+ Bicicleta Gometws Endorphine 6.1 Shimano Alumínio- Aro 26 - 21 Marchas           | 116227.19
+ Bicicleta Gometws Endorphine 7.3 - Shimano Alumínio Aro 29 - 24 Marchas          |  74146.36
+ Bicicleta Gts Advanced 1.0 Aro 29 Freio Disco Câmbio Traseiro Shimano 24 Marchas |  81515.72
+ Bicicleta Trinc Câmbios Shimano Aro 29 Freio A Disco 24v                         | 101427.72
+ Camiseta Predactor 3Xu Multiplied                                                | 109111.88
+ Capacete Gometws Endorphine 2.0                                                  |  50030.60
+ Luva De Ciclismo - Gometws Sports                                                | 101993.69
+
+
+
+ 4) select produto, sum(desconto) as "Total de Descontos" from relacional.itensvenda as itensvenda inner join relacional.produtos as produtos on (itensvenda.idproduto = produtos.idproduto) inner join relacional.vendas as vendas on (itensvenda.idvenda = vendas.idvenda) group by produto order by "Total de Descontos" DESC;
+
+Resultado:
+
+                                     produto                                      | Total de Descontos
+----------------------------------------------------------------------------------+--------------------
+ Bicicleta Altools Stroll Aro 26 Freio À Disco 21 Marchas                         |          101364.07
+ Bicicleta Trinc Câmbios Shimano Aro 29 Freio A Disco 24v                         |           72181.92
+ Bicicleta Aro 29 Mountain Bike Endorphine 6.3 - 24 Marchas - Shimano - Alumínio  |           71733.25
+ Bicicleta Gts Advanced 1.0 Aro 29 Freio Disco Câmbio Traseiro Shimano 24 Marchas |           43415.12
+ Bicicleta Gometws Endorphine 7.3 - Shimano Alumínio Aro 29 - 24 Marchas          |           30086.06
+ Bicicleta Gometws Endorphine 6.1 Shimano Alumínio- Aro 26 - 21 Marchas           |           23715.09
+ Luva De Ciclismo - Gometws Sports                                                |            1981.12
+ Camiseta Predactor 3Xu Multiplied                                                |            1757.52
+ Capacete Gometws Endorphine 2.0                                                  |            1683.98
+ Bermuda Predactor 3Xu Pro                                                        |            1518.27
